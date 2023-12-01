@@ -1,14 +1,12 @@
 import React from 'react';
-
+import ProgressBar from './ProgressBar';
+import { Container } from '@mui/material';
 
 function Footer() {
-    const style = {
-        width: "100vw",
-        height: 80
-    }
-    return (<div style={style}>
-        Footer
-    </div>);
+
+    return (<Container sx={{ mb: 1 }}>
+        <ProgressBar />
+    </Container>);
 }
 
 export default Footer;

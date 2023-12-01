@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
+import CssBaseline from '@mui/material/CssBaseline';
 export const ThemeContext = React.createContext({ toggleDarkMode: () => { } });
 
 function ThemeModeController(props) {
@@ -33,6 +33,7 @@ function ThemeModeController(props) {
 
     return (<ThemeContext.Provider value={{ colorMode, theme }}>
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             {props.children}
         </ThemeProvider>
     </ThemeContext.Provider>

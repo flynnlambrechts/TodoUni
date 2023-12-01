@@ -6,7 +6,6 @@ import { TickIcon } from '../Icons/TickIcon/TickIcon';
 function Title(props) {
     const titleText = "Uni Todo";
     const titleStyle = {
-        mr: 2,
         fontFamily: 'monospace',
         fontWeight: 700,
         letterSpacing: '.3rem',
@@ -17,7 +16,6 @@ function Title(props) {
 
     return (
         <Link to="/" style={{ color: "unset", textDecoration: "none", display: "flex", alignItems: "center" }}>
-            <TickIcon sx={{ ...props.sx, mr: 1 }} />
             <Typography
                 variant={props.variant || "h6"}
                 noWrap
@@ -28,6 +26,7 @@ function Title(props) {
             >
                 {titleText}
             </Typography>
+            <TickIcon sx={{ ...props.sx, ml: 1, mr: 1, }} />
         </Link>
     );
 }

@@ -1,14 +1,16 @@
 import React from 'react';
-
+import { Container } from '@mui/material';
 
 function Main(props) {
     const style = {
+        display: "block",
         flexGrow: 1,
-        height: 800
     }
     return (<main style={style}>
-        {props.children}
-    </main>);
+        <Container maxWidth="unset">
+            {props.children}
+        </Container>
+    </main >);
 }
 
 export default Main;
