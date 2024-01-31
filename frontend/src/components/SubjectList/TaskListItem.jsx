@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 function TaskListItem(props) {
-    // props: {data: {name, hour, minute, ampm, recurring, selectedDays: [], ?week}}
+    // props: {data: {name, hour, minute, ampm, recurring, selectedDays: [], week?, duration?}}
     const data = props.data;
     return (
         <ListItem

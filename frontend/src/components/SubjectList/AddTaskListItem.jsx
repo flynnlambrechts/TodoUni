@@ -74,6 +74,13 @@ function AddTaskListItem(props) {
                     />
                 </Box>
                 <AmPmSelector name="ampm" onChange={handleInputChange}/>
+                <NumberField
+                        label="Duration (mins)"
+                        name="duration"
+                        min={0}
+                        max={120}
+                        onChange={handleInputChange}
+                    />
                 <DayOfWeekPicker
                     selectedDays={selectedDays}
                     onDayChange={setSelectedDays}

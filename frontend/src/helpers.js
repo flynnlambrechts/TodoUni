@@ -63,3 +63,19 @@ export const addTask = (subject, task) => {
 export const getTasks = (subject) => {
     return getSubjects()[subject].tasks;
 }
+
+export const updateState = (subjectName, taskName, week, state) => {
+    const data = getData();
+    console.log(data);
+    const subject = data.subjects[subjectName];
+    const targetTask = subject.tasks.find(task => task.name === taskName);
+    if (targetTask) {
+        console.log("found")
+        if (!targetTask.occurances) {
+            targetTask.occurances = {};
+        }
+        targetTask.occurances[week] = state
+    }
+    console.log(data);
+    localStorage.setItem("data", JSON.stringify(data));
+}
