@@ -8,11 +8,12 @@ function GridContainer(props) {
         display: "grid",
         gridTemplateColumns: `80px repeat(${props.cols}, 1fr)`,
         gridTemplateRows: `repeat(${props.rows + 1}, 1fr)`,
-        gap: 1,
+        gap: 0.5,
+        flexGrow: 1
     }
 
 
-    return (<Box sx={gridContainerStyles}>
+    return (<Box sx={gridContainerStyles} id="grid-view">
         {props.children}
     </Box >);
 }

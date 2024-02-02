@@ -8,7 +8,6 @@ function WeekHeader(props) {
         gridColumn: "1 / span 1",
         gridRow: `${props.number + 2} / span 1`,
         textAlign: "right"
-
     }
 
 

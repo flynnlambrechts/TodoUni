@@ -2,6 +2,7 @@ import * as React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { getFractionOfCompletedTasksToDate } from '../helpers';
 
 function LinearProgressWithLabel(props) {
   return (
@@ -19,11 +20,16 @@ function LinearProgressWithLabel(props) {
 }
 
 export default function ProgressBar() {
-  const [progress, setProgress] = React.useState(10);
+  const calcProgress = () => {
+    return getFractionOfCompletedTasksToDate(new Date()) * 100
+  }
 
+  const [progress, setProgress] = React.useState(calcProgress());
+  ;
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+      // setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
+      setProgress(calcProgress());
     }, 800);
     return () => {
       clearInterval(timer);

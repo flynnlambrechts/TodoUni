@@ -17,3 +17,17 @@ export const parseDate = (dateString) => {
     }
     return new Date(year, month, day);
 }
+
+export const getISOWeek = (date) => {
+    const dt = new Date(date);
+    dt.setHours(0, 0, 0, 0);
+    dt.setDate(dt.getDate() + 4 - (dt.getDay() || 7));
+    const yearStart = new Date(dt.getFullYear(), 0, 1);
+    return Math.ceil(((dt - yearStart) / 86400000 + 1) / 7);
+}
+
+export const dayOfWeekToIndex = (dayOfWeek) => {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const index = days.indexOf(dayOfWeek);
+    return index;
+}

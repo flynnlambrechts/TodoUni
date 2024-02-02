@@ -1,3 +1,5 @@
+import { NUMWEEKS, taskColours } from "./config";
+import { getISOWeek, parseDate, dayOfWeekToIndex } from "./utils";
 
 const blankData = {
     subjects: {}
@@ -7,12 +9,16 @@ const getData = () => {
     return JSON.parse(localStorage.getItem("data"));
 }
 
-export const getStartDate = () => {
+export const getStartDateString = () => {
     const data = getData();
     if (data) {
         return data["startdate"];
     }
     return undefined;
+}
+
+export const getStartDate = () => {
+    return parseDate(getStartDateString());
 }
 
 export const saveStartDate = (newDate) => {
@@ -49,7 +55,7 @@ export const getSubjects = () => {
     if (data) {
         return data.subjects;
     }
-    return undefined;
+    return {};
 }
 
 export const addTask = (subject, task) => {
@@ -66,7 +72,6 @@ export const getTasks = (subject) => {
 
 export const updateState = (subjectName, taskName, week, state) => {
     const data = getData();
-    console.log(data);
     const subject = data.subjects[subjectName];
     const targetTask = subject.tasks.find(task => task.name === taskName);
     if (targetTask) {
@@ -76,6 +81,70 @@ export const updateState = (subjectName, taskName, week, state) => {
         }
         targetTask.occurances[week] = state
     }
-    console.log(data);
     localStorage.setItem("data", JSON.stringify(data));
+}
+
+export const getTaskStatus = (task, occurance) => {
+    if (!task) return "none";
+    if (task.recurring) {
+        if (!task.occurances[occurance]) {
+            return "none";
+        }
+        return Object.keys(taskColours)[task.occurances[occurance]]
+    } else if (occurance != parseInt(task.week)) {
+        return "na";
+    } else {
+        return Object.keys(taskColours)[task.occurances[occurance]]
+    }
+    return "none";
+}
+
+export const getWeekOfTerm = (date) => {
+    // an 0 index (week 1 is week 0)
+    const week = getISOWeek(date);
+    const startWeek = getISOWeek(getStartDate());
+    return week - startWeek;
+}
+
+export const getDatesOfTask = (task, occurance) => {
+    // {name, hour, minute, ampm, recurring, selectedDays: [], occurances: {}, week?, duration?}
+    // TODO: This only works for the first day selected of the task e.g. if its [Monday, Friday] is works o
+    // off the monday value, some work needs to be done to fix this. Also It's an ugly function
+    const startOfTerm = getStartDate();
+
+    const year = new Date(startOfTerm.getFullYear(), 0, 1);
+    const week = getISOWeek(startOfTerm) + occurance;
+    const timeOfDay = (parseInt(task.hour) % 12 + (task.ampm === 'PM' ? 12 : 0)) * 60 * 60 * 1000 + parseInt(task.minute) * 60 * 1000;
+    // console.log(task.selectedDays[0], dayOfWeekToIndex(task.selectedDays[0]))
+    const dayOffset = ((week - 1) * 7 + dayOfWeekToIndex(task.selectedDays[0]) - 1) * 24 * 60 * 60 * 1000;
+    const resultDate = new Date(year.getTime() + dayOffset + timeOfDay);
+
+    return resultDate;
+}
+
+// Progress Bar
+export const getFractionOfCompletedTasksToDate = (date) => {
+    let completed = 0;
+    let total = 0;
+
+    const subjects = getSubjects();
+    for (const subjectName of Object.keys(subjects)) {
+        const tasks = getTasks(subjectName);
+        for (const task of tasks) {
+
+            for (let week = 0; week <= getWeekOfTerm(date); week++) {
+                if (getDatesOfTask(task, week) < date) {
+                    // TODO: extract this into its own func
+                    const status = getTaskStatus(task, week);
+                    total++;
+                    if (status) {
+                        if (status === 'na') total--;
+                        if (status === "done") completed++;
+                    }
+                }
+            }
+        }
+
+    }
+    return total ? completed / total : 0;
 }

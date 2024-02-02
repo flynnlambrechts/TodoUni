@@ -1,22 +1,28 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { updateState } from '../../helpers';
+import { getTaskStatus, updateState } from '../../helpers';
+import { taskColours } from '../../config';
 
 function TaskBlock(props) {
-    // props: {subjectName, taskName, week, status?}
-    const colours = ["unset", "orange",  "red", "green", "grey"]
-
-    const [state, setState] = React.useState(props.status);
+    // props: {subjectName, task, week}
+    
+    const initialStatus = getTaskStatus(props.task, props.week - 1);
+    const [state, setState] = React.useState(Object.keys(taskColours).indexOf(initialStatus));
+    
+    console.log(state);
 
     const taskBlockStyles = {
         justifySelf: "stretch",
         border: "0.4px solid grey",
-        backgroundColor: colours[state],
+        // height: 40,
+        flexGrow: 1,
+        backgroundColor: Object.values(taskColours)[state],
     }
 
     const cycleStatus = () => {
-        const newState = (state + 1) % colours.length;
-        props.subjectName && updateState(props.subjectName, props.taskName, props.week, newState)
+        console.log(state)
+        const newState = (state + 1) % Object.keys(taskColours).length;
+        props.subjectName && updateState(props.subjectName, props.task.name, props.week - 1, newState);
         setState(newState);
     }
 

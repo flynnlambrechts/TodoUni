@@ -4,6 +4,7 @@ import WeekHeader from "../components/TaskGrid/WeekHeader";
 import TaskBlock from "../components/TaskGrid/TaskBlock";
 import TaskHeader from "../components/TaskGrid/TaskHeader";
 import SubjectHeader from "../components/TaskGrid/SubjectHeader";
+import { NUMWEEKS } from "../config";
 
 function GridView() {
     // const dummyTaskList = [
@@ -62,8 +63,6 @@ function GridView() {
     };
 
     const taskNames = extractTaskNames(subjects);
-    console.log(taskNames);
-    const numWeeks = 13;
     const numTasks = taskNames.length;
 
     const grid = React.useMemo(() => {
@@ -83,7 +82,7 @@ function GridView() {
         }
 
         let counter = 0;
-        for (let weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
+        for (let weekIndex = 0; weekIndex < NUMWEEKS; weekIndex++) {
             result.push(
                 <WeekHeader key={"week" + weekIndex} number={weekIndex + 1} />
             );
@@ -93,13 +92,8 @@ function GridView() {
                         <TaskBlock
                             key={subject + " " + counter++}
                             subjectName={subject}
-                            taskName={task.name}
+                            task={task}
                             week={weekIndex + 1}
-                            status={
-                                task.occurances && task.occurances[weekIndex + 1]
-                                    ? task.occurances[weekIndex + 1]
-                                    : ""
-                            }
                         />
                     );
                 }
@@ -109,7 +103,7 @@ function GridView() {
     }, []);
 
     return (
-        <GridContainer rows={numWeeks} cols={numTasks}>
+        <GridContainer rows={NUMWEEKS} cols={numTasks}>
             {grid}
         </GridContainer>
     );
