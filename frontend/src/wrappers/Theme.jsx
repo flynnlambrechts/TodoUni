@@ -21,10 +21,10 @@ function ThemeModeController(props) {
                 palette: {
                     mode,
                     primary: {
-                        main: '#00ff16',
+                        main: '#10945B',
                     },
                     secondary: {
-                        main: '#f50057',
+                        main: '#CB1532',
                     },
                 },
             }),

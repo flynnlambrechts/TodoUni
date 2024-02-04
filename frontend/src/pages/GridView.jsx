@@ -4,7 +4,10 @@ import WeekHeader from "../components/TaskGrid/WeekHeader";
 import TaskBlock from "../components/TaskGrid/TaskBlock";
 import TaskHeader from "../components/TaskGrid/TaskHeader";
 import SubjectHeader from "../components/TaskGrid/SubjectHeader";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import { NUMWEEKS } from "../config";
+
 
 function GridView() {
     // const dummyTaskList = [
@@ -102,10 +105,12 @@ function GridView() {
         return result;
     }, []);
 
-    return (
-        <GridContainer rows={NUMWEEKS} cols={numTasks}>
+    return (<>
+        <GridContainer rows={NUMWEEKS + 1} cols={numTasks}>
             {grid}
         </GridContainer>
+        <Button>Clear</Button>
+    </>
     );
 }
 

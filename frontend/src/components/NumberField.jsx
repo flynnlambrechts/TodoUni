@@ -25,7 +25,7 @@ const NumberField = (props) => {
       <TextField
         name={props.name}
         label={props.label}
-        sx={{ width: '80px' }}
+        // sx={{ width: '80px' }}
         variant="outlined"
         fullWidth
         value={numericValue}

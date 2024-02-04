@@ -8,9 +8,10 @@ import {
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import { deleteTask } from "../../helpers";
 
 function TaskListItem(props) {
-    // props: {data: {name, hour, minute, ampm, recurring, selectedDays: [], week?, duration?}}
+    // props: {subjectId, data: {name, hour, minute, ampm, recurring, selectedDays: [], week?, duration?}}
     const data = props.data;
     return (
         <ListItem
@@ -18,7 +19,7 @@ function TaskListItem(props) {
             sx={{ display: "flex", justifyContent: "space-between" }}
             secondaryAction={
                 <IconButton>
-                    <DeleteIcon></DeleteIcon>
+                    <DeleteIcon onClick={() => deleteTask(props.subjectId, data.name)}></DeleteIcon>
                 </IconButton>
             }>
             <Grid container spacing={2} sx={{ flexGrow: 1 }}>
@@ -28,7 +29,7 @@ function TaskListItem(props) {
                 <Grid xs={3}>
                     {/* <Divider orientation="vertical" flexItem /> */}
                     <ListItemText>
-                        {data.hour}:{data.minute.padStart(2, "0")} {data.ampm}
+                        {data.hour}:{data.minute ? data.minute.padStart(2, "0") : "00"} {data.ampm}
                     </ListItemText>
                 </Grid>
                 <Grid xs={2}>
@@ -36,14 +37,12 @@ function TaskListItem(props) {
                         {data.recurring ? "Recurs" : "Week " + data.week}
                     </ListItemText>
                 </Grid>
-                <Grid>
-                    <ToggleButtonGroup>
+                <Grid xs={1}>
                         {data.selectedDays.map((day) => (
-                            <ToggleButton color="primary" key={day} value={day}>
-                                {day.charAt(0)}
+                            <ToggleButton fullWidth color="primary" key={day} value={day}>
+                                {day}
                             </ToggleButton>
                         ))}
-                    </ToggleButtonGroup>
                 </Grid>
             </Grid>
         </ListItem>

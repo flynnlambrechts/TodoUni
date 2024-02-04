@@ -1,4 +1,4 @@
-import { NUMWEEKS, taskColours } from "./config";
+import { NUMWEEKS, statusStyles } from "./config";
 import { getISOWeek, parseDate, dayOfWeekToIndex } from "./utils";
 
 const blankData = {
@@ -66,8 +66,16 @@ export const addTask = (subject, task) => {
     localStorage.setItem("data", JSON.stringify(data));
 }
 
+
+
 export const getTasks = (subject) => {
     return getSubjects()[subject].tasks;
+}
+
+export const deleteTask = (subjectName, taskName) => {
+    const data = getData();
+    data.subjects[subjectName].tasks = getTasks(subjectName).filter((task) => task.name !== taskName);
+    localStorage.setItem("data", JSON.stringify(data));
 }
 
 export const updateState = (subjectName, taskName, week, state) => {
@@ -75,7 +83,6 @@ export const updateState = (subjectName, taskName, week, state) => {
     const subject = data.subjects[subjectName];
     const targetTask = subject.tasks.find(task => task.name === taskName);
     if (targetTask) {
-        console.log("found")
         if (!targetTask.occurances) {
             targetTask.occurances = {};
         }
@@ -85,18 +92,20 @@ export const updateState = (subjectName, taskName, week, state) => {
 }
 
 export const getTaskStatus = (task, occurance) => {
-    if (!task) return "none";
+    console.log(task)
+    if (!task || !task.occurances) return "none";
     if (task.recurring) {
         if (!task.occurances[occurance]) {
             return "none";
         }
-        return Object.keys(taskColours)[task.occurances[occurance]]
-    } else if (occurance != parseInt(task.week)) {
-        return "na";
+        return Object.keys(statusStyles)[task.occurances[occurance]]
+    } else if (occurance !== parseInt(task.week)) {
+        console.log(occurance, parseInt(task.week), task)
+        return "locked";
     } else {
-        return Object.keys(taskColours)[task.occurances[occurance]]
+        return "none";
+        // return Object.keys(statusStyles)[task.occurances[occurance]]
     }
-    return "none";
 }
 
 export const getWeekOfTerm = (date) => {
@@ -131,14 +140,13 @@ export const getFractionOfCompletedTasksToDate = (date) => {
     for (const subjectName of Object.keys(subjects)) {
         const tasks = getTasks(subjectName);
         for (const task of tasks) {
-
             for (let week = 0; week <= getWeekOfTerm(date); week++) {
                 if (getDatesOfTask(task, week) < date) {
                     // TODO: extract this into its own func
                     const status = getTaskStatus(task, week);
                     total++;
                     if (status) {
-                        if (status === 'na') total--;
+                        if (status === 'na' || status === "locked") total--;
                         if (status === "done") completed++;
                     }
                 }

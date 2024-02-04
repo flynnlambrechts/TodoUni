@@ -15,9 +15,10 @@ const DayOfWeekPicker = ({ selectedDays, onDayChange }) => {
         onChange={handleDayChange}
         aria-label="Days of the week"
         fullWidth
+        size="large"
       >
         {daysOfWeek.map((day) => (
-          <ToggleButton key={day} value={day}>
+          <ToggleButton key={day} value={day} disablePadding>
             {day.charAt(0)}
           </ToggleButton>
         ))}

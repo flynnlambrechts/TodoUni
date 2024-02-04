@@ -1,27 +1,41 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { getTaskStatus, updateState } from '../../helpers';
-import { taskColours } from '../../config';
+import { statusStyles } from '../../config';
 
 function TaskBlock(props) {
     // props: {subjectName, task, week}
     
-    const initialStatus = getTaskStatus(props.task, props.week - 1);
-    const [state, setState] = React.useState(Object.keys(taskColours).indexOf(initialStatus));
+    const initialStatus = getTaskStatus(props.task, props.week);
+    const [state, setState] = React.useState(Object.keys(statusStyles).indexOf(initialStatus));
     
-    console.log(state);
-
+    
     const taskBlockStyles = {
         justifySelf: "stretch",
-        border: "0.4px solid grey",
+        // border: "0.4px solid grey",
         // height: 40,
         flexGrow: 1,
-        backgroundColor: Object.values(taskColours)[state],
+        borderRadius: "10px",
+        ...Object.values(statusStyles)[state],
+    }
+
+    const getNameOfState = (ofState) => {
+        return Object.keys(statusStyles)[ofState];
+    }
+    
+    const getNextState = () => {
+        let newState = (state + 1) % Object.keys(statusStyles).length;
+        if (getNameOfState(newState) === "locked" && statusStyles.length !== 1) {
+            newState = (state + 2) % Object.keys(statusStyles).length;
+        }
+        return newState;
     }
 
     const cycleStatus = () => {
-        console.log(state)
-        const newState = (state + 1) % Object.keys(taskColours).length;
+        if (initialStatus === "locked") {
+            return;
+        }
+        const newState = getNextState();
         props.subjectName && updateState(props.subjectName, props.task.name, props.week - 1, newState);
         setState(newState);
     }
@@ -30,6 +44,7 @@ function TaskBlock(props) {
         sx={taskBlockStyles}
         onMouseDown={cycleStatus}
     >
+        {/* { getNameOfState(state)}{ state} */}
     </Box>);
 }
 

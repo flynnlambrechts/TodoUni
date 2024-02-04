@@ -39,7 +39,7 @@ function SubjectListItem(props) {
 
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding sx={{ paddingLeft: 2 }}>
-                    {getTasks(props.title).map((task) => <TaskListItem data={task}/>)}
+                    {getTasks(props.title).map((task) => <TaskListItem subjectId={props.title} data={task}/>)}
                     { addTask && <AddTaskListItem subjectId={props.title} onSave={() => setAddTask(false)}/>}
                 </List>
                 <SubjectControlsListItem name={props.title} openAddTask={() => setAddTask(true)}/>
