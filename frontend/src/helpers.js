@@ -78,6 +78,14 @@ export const deleteTask = (subjectName, taskName) => {
     localStorage.setItem("data", JSON.stringify(data));
 }
 
+export const getNameOfState = (ofState) => {
+    return Object.keys(statusStyles)[ofState];
+}
+
+export const getIndexOfStatus = (ofStatus) => {
+    return Object.keys(statusStyles).indexOf(ofStatus);
+}
+
 export const updateState = (subjectName, taskName, week, state) => {
     const data = getData();
     const subject = data.subjects[subjectName];
@@ -92,11 +100,14 @@ export const updateState = (subjectName, taskName, week, state) => {
 }
 
 export const getTaskStatus = (task, occurance) => {
-    console.log(task)
+    // console.log(task)
     if (!task || !task.occurances) return "none";
     if (task.recurring) {
-        if (!task.occurances[occurance]) {
-            return "none";
+        if (!task.occurances[occurance] || getNameOfState(task.occurances[occurance]) === "none") {
+            if (new Date().getTime() > getDatesOfTask(task, occurance - 1).getTime()) {
+                return "behind";
+            }
+            return "none"
         }
         return Object.keys(statusStyles)[task.occurances[occurance]]
     } else if (occurance !== parseInt(task.week)) {

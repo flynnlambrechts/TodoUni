@@ -6,6 +6,9 @@ export const daysBetween = (date1, date2) => {
 
 export const parseDate = (dateString) => {
     // parse dates in dd/mm/yy format
+    if (!dateString) {
+        return new Date();
+    }
     const parts = dateString.split('/');
     let day, month, year;
     if (parts.length === 3) {

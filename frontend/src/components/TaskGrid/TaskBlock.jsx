@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { getTaskStatus, updateState } from '../../helpers';
+import { getTaskStatus, updateState, getNameOfState } from '../../helpers';
 import { statusStyles } from '../../config';
 
 function TaskBlock(props) {
     // props: {subjectName, task, week}
-    
+
     const initialStatus = getTaskStatus(props.task, props.week);
     const [state, setState] = React.useState(Object.keys(statusStyles).indexOf(initialStatus));
     
@@ -13,15 +13,11 @@ function TaskBlock(props) {
     const taskBlockStyles = {
         justifySelf: "stretch",
         // border: "0.4px solid grey",
-        // height: 40,
         flexGrow: 1,
         borderRadius: "10px",
         ...Object.values(statusStyles)[state],
     }
 
-    const getNameOfState = (ofState) => {
-        return Object.keys(statusStyles)[ofState];
-    }
     
     const getNextState = () => {
         let newState = (state + 1) % Object.keys(statusStyles).length;
@@ -32,11 +28,12 @@ function TaskBlock(props) {
     }
 
     const cycleStatus = () => {
+        console.log(props.week)
         if (initialStatus === "locked") {
             return;
         }
         const newState = getNextState();
-        props.subjectName && updateState(props.subjectName, props.task.name, props.week - 1, newState);
+        props.subjectName && updateState(props.subjectName, props.task.name, props.week, newState);
         setState(newState);
     }
 
@@ -44,7 +41,7 @@ function TaskBlock(props) {
         sx={taskBlockStyles}
         onMouseDown={cycleStatus}
     >
-        {/* { getNameOfState(state)}{ state} */}
+        {/* { getNameOfState(state)} {state} {props.week} */}
     </Box>);
 }
 
