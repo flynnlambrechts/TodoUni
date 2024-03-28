@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import Title from './Title';
 import NightModeToggle from './NightModeToggle';
+import { base_url } from '../config';
 
 const pages = ['Grid', 'List'];
 const settings = ['Logout', 'Login', 'Register'];
@@ -91,7 +92,7 @@ function Navbar() {
                     </Box>
                     <Box sx={{ flexGrow: 1, ...showDesktop }}>
                         {pages.map((page) => (
-                            <Link style={{ textDecoration: "none" }} to={"/" + page.toLowerCase()}>
+                            <Link style={{ textDecoration: "none" }} to={base_url + page.toLowerCase()}>
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}

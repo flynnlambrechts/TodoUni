@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import { TickIcon } from '../Icons/TickIcon/TickIcon';
+import { base_url } from '../config';
 
 function Title(props) {
     const titleText = "Uni Todo";
@@ -15,7 +16,7 @@ function Title(props) {
 
 
     return (
-        <Link to="/" style={{ color: "unset", textDecoration: "none", display: "flex", alignItems: "center" }}>
+        <Link to={base_url} style={{ color: "unset", textDecoration: "none", display: "flex", alignItems: "center" }}>
             <Typography
                 variant={props.variant || "h6"}
                 noWrap
