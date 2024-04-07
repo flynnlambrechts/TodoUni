@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 
-import { getStartDateString, getTasksBeforeDate, getWeekOfTerm, saveStartDate } from '../helpers';
+import { getStartDateString, getWeekOfTerm, saveStartDate } from '../helpers';
 import SubjectList from '../components/SubjectList/SubjectList';
 import DatePicker from '../components/DatePicker';
 import {daysBetween, parseDate} from '../utils'

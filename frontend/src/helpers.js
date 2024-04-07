@@ -52,7 +52,7 @@ export const renameSubject = (name, newName) => {
 
 export const getSubjects = () => {
     const data = getData();
-    if (data) {
+    if (data && data.subjects) {
         return data.subjects;
     }
     return {};
@@ -65,8 +65,6 @@ export const addTask = (subject, task) => {
     }
     localStorage.setItem("data", JSON.stringify(data));
 }
-
-
 
 export const getTasks = (subject) => {
     return getSubjects()[subject].tasks;

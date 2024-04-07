@@ -8,7 +8,7 @@ function Main(props) {
         flexDirection: "column",
     }
     return (<main style={style}>
-        <Container maxWidth="unset" sx={{flexGrow: 1, display: "flex", flexDirection: "column"}}>
+        <Container maxWidth="unset" sx={{flexGrow: 1, display: "flex", flexDirection: "column" }}>
             {props.children}
         </Container>
     </main >);

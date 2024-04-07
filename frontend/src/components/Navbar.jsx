@@ -1,34 +1,37 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
-import Title from './Title';
-import NightModeToggle from './NightModeToggle';
-import { base_url } from '../config';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
+import Title from "./Title";
+import NightModeToggle from "./NightModeToggle";
+import { base_url } from "../config";
 
-const pages = ['Grid', 'List'];
-const settings = ['Logout', 'Login', 'Register'];
+const pages = [
+    "Grid", 
+    // "List",
+];
+const settings = ["Logout", "Login", "Register"];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const showMobile = {
-        display: { xs: 'flex', md: 'none' }
-    }
+        display: { xs: "flex", md: "none" },
+    };
 
     const showDesktop = {
-        display: { xs: 'none', md: 'flex' }
-    }
+        display: { xs: "none", md: "flex" },
+    };
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -58,31 +61,35 @@ function Navbar() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
-                        >
+                            color="inherit">
                             <MenuIcon />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
+                                vertical: "bottom",
+                                horizontal: "left",
                             }}
                             keepMounted
                             transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
+                                vertical: "top",
+                                horizontal: "left",
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
+                                display: { xs: "block", md: "none" },
+                            }}>
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={() => { console.log("here") }}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem
+                                    key={page}
+                                    onClick={() => {
+                                        console.log("here");
+                                    }}>
+                                    <Typography textAlign="center">
+                                        {page}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -92,15 +99,14 @@ function Navbar() {
                     </Box>
                     <Box sx={{ flexGrow: 1, ...showDesktop }}>
                         {pages.map((page) => (
-                            <Link style={{ textDecoration: "none" }} to={base_url + page.toLowerCase()}>
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                to={base_url + page.toLowerCase()}>
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, display: 'block' }}
-                                >
-                                    <Typography>
-                                        {page}
-                                    </Typography>
+                                    sx={{ my: 2, display: "block" }}>
+                                    <Typography>{page}</Typography>
                                 </Button>
                             </Link>
                         ))}
@@ -108,7 +114,6 @@ function Navbar() {
                     <NightModeToggle />
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-
                             <IconButton
                                 edge="end"
                                 aria-label="account of current user"
@@ -116,37 +121,39 @@ function Navbar() {
                                 aria-haspopup="true"
                                 onClick={handleOpenUserMenu}
                                 color="inherit"
-                                sx={{ p: 0 }}
-                            >
+                                sx={{ p: 0 }}>
                                 <AccountCircle sx={{ fontSize: 30 }} />
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{ mt: "45px" }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
+                                vertical: "top",
+                                horizontal: "right",
                             }}
                             keepMounted
                             transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
+                                vertical: "top",
+                                horizontal: "right",
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
+                            onClose={handleCloseUserMenu}>
                             {settings.map((i, setting) => (
-                                <MenuItem key={setting + i} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem
+                                    key={setting + i}
+                                    onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">
+                                        {setting}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
                 </Toolbar>
-            </Container >
-        </AppBar >
+            </Container>
+        </AppBar>
     );
 }
 export default Navbar;
