@@ -1,28 +1,53 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { getTaskStatus, updateState, getNameOfState } from '../../helpers';
-import { statusStyles } from '../../config';
+import { getTaskStatus, updateState, getNameOfState, getIndexOfStatus } from '../../helpers';
+import ButtonBase from '@mui/material/ButtonBase';
+import { statuses } from '../../config';
+import { ThemeContext } from '../../wrappers/Theme';
+
+function StateStyles(stateName) {
+    const theme = React.useContext(ThemeContext).theme;
+    const palette = theme.palette;
+
+    const darkOrLight = (colors) => palette.mode === 'dark' ? colors.dark : colors.light
+    const generateStyles = (colors) => {
+        return {backgroundColor: colors.main, "&:hover": {
+            backgroundColor: darkOrLight(colors)
+        }}
+    }
+
+    const stateStyles = {
+        "none": {border: "1px solid"},
+        "partial": generateStyles(palette.warning),
+        "behind": generateStyles(palette.error),
+        "done": generateStyles(palette.success),
+        "na": {backgroundColor: ""},
+        "locked": {backgroundColor: "unset"},
+    }
+    return stateStyles[stateName]
+}
 
 function TaskBlock(props) {
-    // props: {subjectName, task, week}
-
+    
     const initialStatus = getTaskStatus(props.task, props.week);
-    const [state, setState] = React.useState(Object.keys(statusStyles).indexOf(initialStatus));
+    const [state, setState] = React.useState(getIndexOfStatus(initialStatus));
     
-    
+    const stateName = getNameOfState(state);
+
     const taskBlockStyles = {
         justifySelf: "stretch",
         // border: "0.4px solid grey",
         flexGrow: 1,
         borderRadius: "10px",
-        ...Object.values(statusStyles)[state],
+        ...StateStyles(stateName),
+        focusRipple: true,
     }
 
     
     const getNextState = () => {
-        let newState = (state + 1) % Object.keys(statusStyles).length;
-        if (getNameOfState(newState) === "locked" && statusStyles.length !== 1) {
-            newState = (state + 2) % Object.keys(statusStyles).length;
+        let newState = (state + 1) % statuses.length;
+        if (getNameOfState(newState) === "locked" && statuses.length !== 1) {
+            newState = (state + 2) % statuses.length;
         }
         return newState;
     }
@@ -37,12 +62,12 @@ function TaskBlock(props) {
         setState(newState);
     }
 
-    return (<Box 
+    return (<ButtonBase 
         sx={taskBlockStyles}
         onMouseDown={cycleStatus}
     >
         {/* { getNameOfState(state)} {state} {props.week} */}
-    </Box>);
+    </ButtonBase>);
 }
 
 export default TaskBlock;

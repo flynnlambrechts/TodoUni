@@ -26,6 +26,15 @@ function ThemeModeController(props) {
                     secondary: {
                         main: '#CB1532',
                     },
+                    success: {
+                        main: '#10945B',
+                    },
+                    warning: {
+                        main: '#D77917',
+                    },
+                    error: {
+                        main: '#CB1532',
+                    }
                 },
             }),
         [mode],

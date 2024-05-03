@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Credits
 
-[For Routing in gh-pages](https://github.com/rafgraph/spa-github-pages?tab=readme-ov-file)
+[For Routing in git hub pages](https://github.com/rafgraph/spa-github-pages?tab=readme-ov-file)
 
 ## Available Scripts
 

@@ -1,4 +1,4 @@
-import { NUMWEEKS, statusStyles } from "./config";
+import { NUMWEEKS, statuses } from "./config";
 import { getISOWeek, parseDate, dayOfWeekToIndex } from "./utils";
 
 const blankData = {
@@ -77,11 +77,11 @@ export const deleteTask = (subjectName, taskName) => {
 }
 
 export const getNameOfState = (ofState) => {
-    return Object.keys(statusStyles)[ofState];
+    return statuses[ofState];
 }
 
 export const getIndexOfStatus = (ofStatus) => {
-    return Object.keys(statusStyles).indexOf(ofStatus);
+    return statuses.indexOf(ofStatus);
 }
 
 export const updateState = (subjectName, taskName, week, state) => {
@@ -107,7 +107,7 @@ export const getTaskStatus = (task, occurance) => {
             }
             return "none"
         }
-        return Object.keys(statusStyles)[task.occurances[occurance]]
+        return statuses[task.occurances[occurance]]
     } else if (occurance !== parseInt(task.week)) {
         console.log(occurance, parseInt(task.week), task)
         return "locked";
