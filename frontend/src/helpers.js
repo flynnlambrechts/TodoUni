@@ -165,3 +165,7 @@ export const getFractionOfCompletedTasksToDate = (date) => {
     }
     return total ? completed / total : 0;
 }
+
+export function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

@@ -105,7 +105,7 @@ function Navbar() {
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, display: "block" }}>
+                                    sx={{ my: 2, display: "block", color: "white" }}>
                                     <Typography>{page}</Typography>
                                 </Button>
                             </Link>

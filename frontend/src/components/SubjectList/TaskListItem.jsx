@@ -26,7 +26,7 @@ function TaskListItem(props) {
                 <Grid xs={5}>
                     <ListItemText>{data.name}</ListItemText>
                 </Grid>
-                <Grid xs={3}>
+                <Grid xs={2}>
                     {/* <Divider orientation="vertical" flexItem /> */}
                     <ListItemText>
                         {data.hour}:{data.minute ? data.minute.padStart(2, "0") : "00"} {data.ampm}
@@ -37,11 +37,9 @@ function TaskListItem(props) {
                         {data.recurring ? "Recurs" : "Week " + data.week}
                     </ListItemText>
                 </Grid>
-                <Grid xs={1}>
+                <Grid xs={2}>
                         {data.selectedDays.map((day) => (
-                            <ToggleButton fullWidth color="primary" key={day} value={day}>
-                                {day}
-                            </ToggleButton>
+                            day
                         ))}
                 </Grid>
             </Grid>

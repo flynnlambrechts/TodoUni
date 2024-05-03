@@ -11,16 +11,37 @@ function SubjectControlsListItem(props) {
 
     return (
         <>
-            <TextInputModal title={"Rename " + props.name} fieldName="New Name" isOpen={editOpen} onClose={() => setEditOpen(false)} onSave={(text) => renameSubject(props.name, text)}/>
+            <TextInputModal
+                title={"Rename " + props.name}
+                fieldName="New Name"
+                isOpen={editOpen}
+                onClose={() => setEditOpen(false)}
+                onSave={(text) => renameSubject(props.name, text)}
+            />
             <ListItem
                 borderTop={1}
-                style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button onClick={props.openAddTask}>Add Task</Button>
+                sx={{
+                    display: "flex",
+                    margin: 0,
+                    padding : 0,
+                    justifyContent: "space-between",
+                }}>
 
-                    <ButtonGroup>
-                        <Button color="warning" onClick={openEdit}>Edit</Button>
-                        <Button color="error" onClick={() => removeSubject(props.name)}>Delete</Button>
-                    </ButtonGroup>
+
+                <ButtonGroup variant="contained">
+                    <Button
+                        color="error"
+                        onClick={() => removeSubject(props.name)}>
+                        Delete Subject
+                    </Button>
+                    <Button color="warning" onClick={openEdit}>
+                        Edit Name
+                    </Button>
+                </ButtonGroup>
+
+                <Button variant="contained" onClick={props.openAddTask}>
+                    Add Task
+                </Button>
             </ListItem>
         </>
     );
