@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import React from "react";
+import { Box, Typography } from "@mui/material";
 
 function SubjectHeader(props) {
     // props: {numTasks}
@@ -7,15 +7,18 @@ function SubjectHeader(props) {
         justifySelf: "stretch",
         textAlign: "center",
         gridColumn: "span " + props.numTasks,
-        // border: "1px solid white",
+        border: 1,
+        borderRadius: 3,
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
-    }
+        justifyContent: "center",
+    };
 
-    return (<Box sx={taskBlockStyles}>
-        {props.name}
-    </Box>);
+    return (
+        <Box sx={taskBlockStyles}>
+            <Typography variant="h5">{props.name}</Typography>
+        </Box>
+    );
 }
 
 export default SubjectHeader;

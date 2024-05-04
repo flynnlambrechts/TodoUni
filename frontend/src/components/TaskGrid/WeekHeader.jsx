@@ -5,9 +5,6 @@ function WeekHeader(props) {
     const weekHeaderStyles = {
         justifySelf: "stretch",
         // border: "1px solid white",
-        gridColumn: "1 / span 1",
-        gridRow: `${props.number + 2} / span 1`,
-        textAlign: "right",
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end"
@@ -15,7 +12,7 @@ function WeekHeader(props) {
 
 
     return (<Box sx={weekHeaderStyles}>
-        Week {props.number}
+        {props.exam ? "Exam" : `Week ${props.number}`}
     </Box>);
 }
 

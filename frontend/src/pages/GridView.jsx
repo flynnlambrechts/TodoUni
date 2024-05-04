@@ -1,12 +1,10 @@
 import React from "react";
-import GridContainer from "../components/TaskGrid/GridContainer";
-import WeekHeader from "../components/TaskGrid/WeekHeader";
-import TaskBlock from "../components/TaskGrid/TaskBlock";
 import TaskHeader from "../components/TaskGrid/TaskHeader";
 import SubjectHeader from "../components/TaskGrid/SubjectHeader";
 import Button from "@mui/material/Button";
-import { NUMWEEKS } from "../config";
 import { getSubjects } from "../helpers";
+import SubjectGrid from "../components/TaskGrid/SubjectGrid";
+import GridContainer2 from "../components/TaskGrid/GridContainer2";
 
 function TaskGrid() {
     const subjects = getSubjects();
@@ -18,12 +16,10 @@ function TaskGrid() {
             )
             .flat();
     };
+    const widths = [];
 
-    const taskNames = extractTaskNames(subjects);
-    const numTasks = taskNames.length;
 
     const grid = React.useMemo(() => {
-
         const subjectHeader = [<TaskHeader name={""} key={"blank1"} />];
         Object.keys(subjects).forEach((subjectTitle) =>
             subjectHeader.push(
@@ -35,40 +31,49 @@ function TaskGrid() {
             )
         );
 
-        const result = [
-            ...subjectHeader,
-            <TaskHeader name={""} key={"blank2"} />,
-        ];
-        for (const [key, taskName] of taskNames.entries()) {
-            result.push(<TaskHeader key={key} name={taskName} />);
-        }
+        // const result = [
+        //     ...subjectHeader,
+        //     <TaskHeader name={""} key={"blank2"} />,
+        // ];
+        // for (const [key, taskName] of taskNames.entries()) {
+        //     result.push(<TaskHeader key={key} name={taskName} />);
+        // }
 
-        let counter = 0;
-        for (let weekIndex = 0; weekIndex < NUMWEEKS; weekIndex++) {
-            result.push(
-                <WeekHeader key={"week" + weekIndex} number={weekIndex + 1} />
-            );
-            for (const subject of Object.keys(subjects)) {
-                for (const task of subjects[subject].tasks) {
-                    result.push(
-                        <TaskBlock
-                            key={subject + " " + counter++}
-                            subjectName={subject}
-                            task={task}
-                            week={weekIndex + 1}
-                        />
-                    );
-                }
-            }
+        // let counter = 0;
+        // for (let weekIndex = 0; weekIndex < NUMWEEKS; weekIndex++) {
+        //     result.push(
+        //         <WeekHeader key={"week" + weekIndex} number={weekIndex + 1} />
+        //     );
+        //     for (const subject of Object.keys(subjects)) {
+        //         for (const task of subjects[subject].tasks) {
+        //             result.push(
+        //                 <TaskBlock
+        //                     key={subject + " " + counter++}
+        //                     subjectName={subject}
+        //                     task={task}
+        //                     week={weekIndex + 1}
+        //                 />
+        //             );
+        //         }
+        //     }
+        // }
+        const result = [];
+        for (const subject of Object.keys(subjects)) {
+            widths.push(subjects[subject].tasks.length)
+            result.push(<SubjectGrid name={subject} tasks={subjects[subject].tasks} />)
         }
         return result;
     }, []);
 
     return (
-        <>
-            <GridContainer rows={NUMWEEKS + 1} cols={numTasks}>
+        <>  
+            <GridContainer2 widths={widths}>
                 {grid}
-            </GridContainer>
+            </GridContainer2>
+
+            {/* <GridContainer rows={NUMWEEKS + 1} cols={numTasks}>
+                {grid}
+            </GridContainer> */}
             <Button>Clear</Button>
         </>
     );

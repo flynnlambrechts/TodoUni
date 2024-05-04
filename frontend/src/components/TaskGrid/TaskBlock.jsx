@@ -10,6 +10,10 @@ import ButtonBase from "@mui/material/ButtonBase";
 import { statuses } from "../../config";
 import { ThemeContext } from "../../wrappers/Theme";
 import Tooltip from "@mui/material/Tooltip";
+import { TickIcon } from "../TickIcon/TickIcon";
+import { AlertIcon } from "../../Icons/AlertIcon/AlertIcon";
+import WaitIcon from "../../Icons/WaitIcon/WaitIcon";
+import { Box } from "@mui/material";
 
 function StateStyles(stateName) {
     const theme = React.useContext(ThemeContext).theme;
@@ -20,18 +24,20 @@ function StateStyles(stateName) {
     const generateStyles = (colors) => {
         return {
             backgroundColor: colors.main,
+            color: colors.main,
             "&:hover": {
+                color: "text.primary",
                 backgroundColor: darkOrLight(colors),
             },
         };
     };
 
     const stateStyles = {
-        none: { border: "1px solid" },
+        none: { border: "1px solid " + palette.text.primary, color: "background.paper", "&:hover": {color: "text.primary"} },
         partial: generateStyles(palette.warning),
         behind: generateStyles(palette.error),
         done: generateStyles(palette.success),
-        na: { backgroundColor: "" },
+        na: { backgroundColor: "", color: "background.default" },
         locked: { backgroundColor: "unset" },
     };
     return stateStyles[stateName];
@@ -44,13 +50,21 @@ function TaskBlock(props) {
     const stateName = getNameOfState(state);
 
     const taskBlockStyles = {
-        justifySelf: "stretch",
         // border: "0.4px solid grey",
-        flexGrow: 1,
-        borderRadius: "10px",
+        // flexGrow: 1,
+        // width: "100%",
+        // height: 50,
+        gridRow: "span 1",
+        borderRadius: 3,
         ...StateStyles(stateName),
         focusRipple: true,
     };
+
+    const icons = {
+        done: <TickIcon />,
+        behind: <AlertIcon />,
+        partial: <WaitIcon />
+    }
 
     const getNextState = () => {
         let newState = (state + 1) % statuses.length;
@@ -77,11 +91,13 @@ function TaskBlock(props) {
     };
 
     return (
-        <Tooltip title={capitalizeFirstLetter(stateName)} arrow>
-            <ButtonBase sx={taskBlockStyles} onMouseDown={cycleStatus}>
-                {/* { getNameOfState(state)} {state} {props.week} */}
+        // <Tooltip  arrow>
+            <Box sx={taskBlockStyles} onMouseDown={cycleStatus}>
+                <ButtonBase sx={{width: "100%", height: "100%"}}>
+                {icons[stateName]}&nbsp;{capitalizeFirstLetter(stateName)}
             </ButtonBase>
-        </Tooltip>
+            </Box>
+        // </Tooltip>
     );
 }
 
