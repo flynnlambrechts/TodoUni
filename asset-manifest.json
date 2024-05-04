@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Todouni/static/css/main.28c7fbda.css",
-    "main.js": "/Todouni/static/js/main.d5206bc7.js",
+    "main.js": "/Todouni/static/js/main.63799d23.js",
     "static/js/787.9e9f4ffd.chunk.js": "/Todouni/static/js/787.9e9f4ffd.chunk.js",
     "index.html": "/Todouni/index.html",
     "main.28c7fbda.css.map": "/Todouni/static/css/main.28c7fbda.css.map",
-    "main.d5206bc7.js.map": "/Todouni/static/js/main.d5206bc7.js.map",
+    "main.63799d23.js.map": "/Todouni/static/js/main.63799d23.js.map",
     "787.9e9f4ffd.chunk.js.map": "/Todouni/static/js/787.9e9f4ffd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.28c7fbda.css",
-    "static/js/main.d5206bc7.js"
+    "static/js/main.63799d23.js"
   ]
 }
