@@ -7,20 +7,21 @@ function RowHeaders(props) {
     const headers = [];
     for (let weekIndex = 0; weekIndex < NUMWEEKS; weekIndex++) {
         headers.push(
-            <WeekHeader key={"week" + weekIndex} number={weekIndex + 1} />
+            <WeekHeader key={"week " + weekIndex} number={weekIndex + 1} />
         );
     }
-    headers.push(<WeekHeader exam />)
+    headers.push(<WeekHeader key={-1} exam />)
     return (
         <Box
             sx={{
                 // border: 1,
+                gap: "5px",
                 display: "grid",
                 gridColumn: "span 1",
                 // gridRowStart: 1,
-                gridTemplateRows: "repeat(13, 1fr)" 
+                gridTemplateRows: `repeat(${NUMWEEKS + 3}, 1fr)`
             }}>
-            <Box sx={{ gridRow: "span 2" }}></Box>
+            <Box sx={{ gridRow: "span 2",}}></Box>
             {headers}
         </Box>
     );

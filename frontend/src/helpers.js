@@ -76,13 +76,6 @@ export const deleteTask = (subjectName, taskName) => {
     localStorage.setItem("data", JSON.stringify(data));
 }
 
-export const getNameOfState = (ofState) => {
-    return statuses[ofState];
-}
-
-export const getIndexOfStatus = (ofStatus) => {
-    return statuses.indexOf(ofStatus);
-}
 
 export const updateState = (subjectName, taskName, week, state) => {
     const data = getData();
@@ -94,20 +87,33 @@ export const updateState = (subjectName, taskName, week, state) => {
         }
         targetTask.occurances[week] = state
     }
+    console.log(data);
     localStorage.setItem("data", JSON.stringify(data));
+}
+
+export const updateExam = (subjectName, state) => {
+    const data = getData();
+    const subject = data.subjects[subjectName];
+    subject["exam"] = state;
+    localStorage.setItem("data", JSON.stringify(data));
+}
+
+export const getExam = (subjectName) => {
+    const subject = getSubjects()[subjectName];
+    return subject.exam;
 }
 
 export const getTaskStatus = (task, occurance) => {
     // console.log(task)
     if (!task || !task.occurances) return "none";
     if (task.recurring) {
-        if (!task.occurances[occurance] || getNameOfState(task.occurances[occurance]) === "none") {
+        if (!task.occurances[occurance] || task.occurances[occurance] === "none") {
             if (new Date().getTime() > getDatesOfTask(task, occurance - 1).getTime()) {
                 return "behind";
             }
             return "none"
         }
-        return statuses[task.occurances[occurance]]
+        return task.occurances[occurance]
     } else if (occurance !== parseInt(task.week)) {
         console.log(occurance, parseInt(task.week), task)
         return "locked";
@@ -166,6 +172,3 @@ export const getFractionOfCompletedTasksToDate = (date) => {
     return total ? completed / total : 0;
 }
 
-export function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}

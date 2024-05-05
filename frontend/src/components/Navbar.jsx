@@ -17,7 +17,7 @@ import NightModeToggle from "./NightModeToggle";
 import { base_url } from "../config";
 
 const pages = [
-    "Grid", 
+    "Grid",
     // "List",
 ];
 const settings = ["Logout", "Login", "Register"];
@@ -105,7 +105,11 @@ function Navbar() {
                                 <Button
                                     key={page}
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, display: "block", color: "white" }}>
+                                    sx={{
+                                        my: 2,
+                                        display: "block",
+                                        color: "white",
+                                    }}>
                                     <Typography>{page}</Typography>
                                 </Button>
                             </Link>

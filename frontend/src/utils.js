@@ -34,3 +34,7 @@ export const dayOfWeekToIndex = (dayOfWeek) => {
     const index = days.indexOf(dayOfWeek);
     return index;
 }
+
+export function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

@@ -5,8 +5,8 @@ export const base_url = "Todouni/"
 export const statuses = [
     "none",
     "partial",
-    "behind",
     "done",
+    "behind",
     "na",
-    "locked",
+    // "locked",
 ]

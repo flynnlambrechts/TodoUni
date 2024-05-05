@@ -5,17 +5,18 @@ import { getStartDateString, getWeekOfTerm, saveStartDate } from '../helpers';
 import SubjectList from '../components/SubjectList/SubjectList';
 import DatePicker from '../components/DatePicker';
 import {daysBetween, parseDate} from '../utils'
+import { WEEKDAYS } from '../constants';
 
 function Dashboard (props) {
     const today = new Date();
 
     const updateTitle = () => {
-        let title = `Today is ${today.toDateString()}`;
-        const startDate  = getStartDateString();
-        if (startDate) {
-            let ddays = daysBetween(parseDate(startDate), today);
-            title += `, ${Math.abs(ddays)} days ${ddays < 0 ? "until uni" : "completed"}, week ${getWeekOfTerm(new Date()) + 1}`
-        }
+        let title = `Today is ${WEEKDAYS[today.getDay()]} Week ${getWeekOfTerm(today) + 1}`;
+        // const startDate  = getStartDateString();
+        // if (startDate) {
+        //     let ddays = daysBetween(parseDate(startDate), today);
+        //     title += `, ${Math.abs(ddays)} Days ${ddays < 0 ? "Until Term" : "Completed"}`
+        // }
         return title
     }
 

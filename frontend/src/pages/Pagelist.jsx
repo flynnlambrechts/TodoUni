@@ -17,7 +17,6 @@ function PageList() {
     return (
         <ThemeModeController>
             <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-
                 <Navbar />
                 <Main>
                     <Routes >

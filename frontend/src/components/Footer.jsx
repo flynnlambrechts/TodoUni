@@ -4,7 +4,7 @@ import { Container } from '@mui/material';
 
 function Footer() {
 
-    return (<Container sx={{ mb: 1 }}>
+    return (<Container sx={{flexGrow: 1}}>
         <ProgressBar />
     </Container>);
 }
