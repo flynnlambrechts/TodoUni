@@ -1,8 +1,5 @@
 import React from "react";
-import {
-    ListItem,
-    ListItemText,
-} from "@mui/material";
+import { ListItem, ListItemText, Tooltip } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
@@ -16,9 +13,14 @@ function TaskListItem(props) {
             component="div"
             sx={{ display: "flex", justifyContent: "space-between" }}
             secondaryAction={
-                <IconButton>
-                    <DeleteIcon onClick={() => deleteTask(props.subjectId, data.name)}></DeleteIcon>
-                </IconButton>
+                <Tooltip title={"Delete Task"} placement="right">
+                    <IconButton>
+                        <DeleteIcon
+                            onClick={() =>
+                                deleteTask(props.subjectId, data.name)
+                            }></DeleteIcon>
+                    </IconButton>
+                </Tooltip>
             }>
             <Grid container spacing={2} sx={{ flexGrow: 1 }}>
                 <Grid xs={5}>
@@ -27,7 +29,9 @@ function TaskListItem(props) {
                 <Grid xs={2}>
                     {/* <Divider orientation="vertical" flexItem /> */}
                     <ListItemText>
-                        {data.hour}:{data.minute ? data.minute.padStart(2, "0") : "00"} {data.ampm}
+                        {data.hour}:
+                        {data.minute ? data.minute.padStart(2, "0") : "00"}{" "}
+                        {data.ampm}
                     </ListItemText>
                 </Grid>
                 <Grid xs={2}>
@@ -35,11 +39,7 @@ function TaskListItem(props) {
                         {data.recurring ? "Recurs" : "Week " + data.week}
                     </ListItemText>
                 </Grid>
-                <Grid xs={2}>
-                        {data.selectedDays.map((day) => (
-                            day
-                        ))}
-                </Grid>
+                <Grid xs={2}>{data.selectedDays.map((day) => day)}</Grid>
             </Grid>
         </ListItem>
     );

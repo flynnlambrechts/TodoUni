@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Checkbox, ListItem, TextField, Typography } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import DayOfWeekPicker from "../DayOfTheWeekPicker";
 import NumberField from "../NumberField";
@@ -9,18 +9,18 @@ import { addTask } from "../../helpers";
 import ToggleButton from "@mui/material/ToggleButton";
 
 function AddTaskListItem(props) {
-    // props = {subjectId, ?onSave}
-    const [recurring, setRecuring] = React.useState(true);
-    const [selectedDays, setSelectedDays] = React.useState([]);
-    const [formData, setFormData] = React.useState({});
+    const [recurring, setRecurring] = useState(true);
+    const [selectedDays, setSelectedDays] = useState([]);
+    const [formData, setFormData] = useState({});
 
-    const handleSave = () => {
+    const handleSave = (e) => {
+        e.preventDefault();
         const taskData = {
             recurring,
             ampm: "AM",
             selectedDays,
             ...formData,
-            occurances: {}
+            occurrences: {},
         };
         addTask(props.subjectId, taskData);
         if (props.onSave) {
@@ -29,38 +29,37 @@ function AddTaskListItem(props) {
     };
 
     const handleInputChange = (e) => {
-        const newData = { ...formData };
-        newData[e.target.name] = e.target.value;
-        setFormData(newData);
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
+
     return (
         <ListItem
             component="form"
-            onSubmit={(e) => {
-                e.preventDefault();
-                handleSave(e);
-            }}
+            onSubmit={handleSave}
             sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Grid container spacing={1}>
-                <Grid xs={2}>
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
                     <TextField
+                        fullWidth
                         name="name"
                         label="Name"
                         onChange={handleInputChange}
                     />
                 </Grid>
-                <Grid xs={1}>
+                <Grid item xs={1}>
                     <ToggleButton
                         selected={recurring}
-                        onChange={(e) => {
-                            setRecuring(!recurring);
-                        }}
+                        onChange={() => setRecurring(!recurring)}
                         size="large"
                         fullWidth>
                         Recur
                     </ToggleButton>
                 </Grid>
-                <Grid xs={2}>
+                <Grid item xs={6} sm={3}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <NumberField
                             name="hour"
@@ -79,12 +78,12 @@ function AddTaskListItem(props) {
                         />
                     </Box>
                 </Grid>
-                <Grid xs={1}>
+                <Grid item xs={1}>
                     <AmPmSelector name="ampm" onChange={handleInputChange} />
                 </Grid>
-
-                <Grid xs={1}>
+                <Grid item xs={2}>
                     <NumberField
+                        fullWidth
                         label="Duration (mins)"
                         name="duration"
                         min={0}
@@ -92,16 +91,16 @@ function AddTaskListItem(props) {
                         onChange={handleInputChange}
                     />
                 </Grid>
-                <Grid xs={4}>
+                <Grid item xs={12}>
                     <DayOfWeekPicker
                         selectedDays={selectedDays}
                         onDayChange={setSelectedDays}
                     />
                 </Grid>
-
                 {!recurring && (
-                    <Grid xs={2}>
+                    <Grid item xs={2}>
                         <NumberField
+                            fullWidth
                             name="week"
                             label="Week"
                             min={0}
@@ -110,9 +109,9 @@ function AddTaskListItem(props) {
                         />
                     </Grid>
                 )}
-                <Grid>
+                <Grid item xs={2}>
                     <Button
-                        xs={1}
+                        fullWidth
                         type="submit"
                         size="large"
                         variant="contained">

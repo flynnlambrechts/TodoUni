@@ -12,9 +12,7 @@ function Footer() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-            }}>
-            
-        </Box>
+            }}></Box>
     );
 }
 

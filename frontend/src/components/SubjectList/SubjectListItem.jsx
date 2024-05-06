@@ -1,56 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     List,
     ListItemText,
     ListItemButton,
-    Box,
     Typography,
+    Card,
+    CardHeader,
+    CardContent,
 } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import TaskListItem from "./TaskListItem";
-
-import SubjectControlsListItem from "./SubjectControlsListItem";
+import SubjectControls from "./SubjectControls";
 import AddTaskListItem from "./AddTaskListItem";
 import { getTasks } from "../../helpers";
 
 function SubjectListItem(props) {
-    const [open, setOpen] = React.useState(true);
-    const [addTask, setAddTask] = React.useState(false);
+    const [open, setOpen] = useState(true);
+    const [addTask, setAddTask] = useState(false);
 
-    const handleClick = () => {
+    const toggleOpen = () => {
         setOpen(!open);
     };
 
     return (
-        <Box sx={{ border: 1, borderRadius: "5px" }}>
-            <ListItemButton
-                onClick={handleClick}>
-                <ListItemText>
-                    <Typography variant="h6">{props.title}</Typography>
-                </ListItemText>
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
+        <Card variant="outlined">
+            <CardHeader
+                onClick={toggleOpen}
+                title={<Typography variant="h6">{props.title}</Typography>}
+                action={open ? <ExpandLess /> : <ExpandMore />}
+            />
 
             <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding sx={{ paddingLeft: 2 }}>
-                    {getTasks(props.title).map((task) => (
-                        <TaskListItem subjectId={props.title} data={task} />
-                    ))}
-                    {addTask && (
-                        <AddTaskListItem
-                            subjectId={props.title}
-                            onSave={() => setAddTask(false)}
-                        />
-                    )}
-                </List>
-                <SubjectControlsListItem
+                <CardContent>
+                    <List
+                        component="div"
+                        disablePadding
+                        sx={{ paddingLeft: 2 }}>
+                        {getTasks(props.title).map((task) => (
+                            <TaskListItem
+                                key={task.id}
+                                subjectId={props.title}
+                                data={task}
+                            />
+                        ))}
+                        {addTask && (
+                            <AddTaskListItem
+                                subjectId={props.title}
+                                onSave={() => setAddTask(false)}
+                            />
+                        )}
+                    </List>
+                </CardContent>
+                <SubjectControls
                     name={props.title}
                     openAddTask={() => setAddTask(true)}
                 />
             </Collapse>
-        </Box>
+        </Card>
     );
 }
 
