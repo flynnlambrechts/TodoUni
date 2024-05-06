@@ -18,15 +18,25 @@ function GridContainer(props) {
         columnGap: 2,
         gridTemplateColumns,
         gridTemplateRows: "1fr",
-        // flexGrow: 1,
+        flexGrow: 1,
     };
     return (
-        <PaintContext.Provider value={{paintState, setPaintState}}>
-            <Box sx={containerStyles} onMouseUp={() => {setPaintState(undefined)}}>
-                <RowHeaders />
-                {props.children}
-            </Box>
-        </PaintContext.Provider>
+        <>
+            <PaintContext.Provider value={{ paintState, setPaintState }}>
+                <Box
+                    sx={containerStyles}
+                    onMouseUp={() => {
+                        setPaintState(undefined);
+                    }}
+                    onMouseLeave={() => {
+                        setPaintState(undefined);
+                    }}>
+
+                    <RowHeaders />
+                    {props.children}
+                </Box>
+            </PaintContext.Provider>
+        </>
     );
 }
 

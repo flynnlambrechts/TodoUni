@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import { getSubjects } from "../helpers";
 import SubjectGrid from "../components/TaskGrid/SubjectGrid";
 import GridContainer from "../components/TaskGrid/GridContainer";
+import { Box } from "@mui/material";
+import ProgressBar from "../components/ProgressBar";
 
 function TaskGrid() {
     const subjects = getSubjects();
@@ -23,68 +25,30 @@ function TaskGrid() {
 
         const result = [];
         for (const subject of Object.keys(subjects)) {
-            widths.push(subjects[subject].tasks.length)
-            result.push(<SubjectGrid name={subject} tasks={subjects[subject].tasks} />)
+            widths.push(subjects[subject].tasks.length);
+            result.push(
+                <SubjectGrid name={subject} tasks={subjects[subject].tasks} />
+            );
         }
         return result;
     }, []);
 
     return (
-        <>  
-            <GridContainer widths={widths}>
-                {grid}
-            </GridContainer>
+        <Box
+            sx={{
+                flexGrow: 1,
+                // border: 1,
+                display: "flex",
+                flexDirection: "column",
+            }}>
+            <GridContainer widths={widths}>{grid}</GridContainer>
             <Button>Clear</Button>
-        </>
+            <ProgressBar />
+        </Box>
     );
 }
 
 function GridView() {
-    // const dummyTaskList = [
-    //     {
-    //         name: "Monday Lecture",
-    //         occurances: {
-    //             1: {
-    //                 "status": 1,
-    //             },
-    //             2: {
-    //                 "status": 2,
-    //             }
-    //         }
-    //     },
-    //     {
-    //         name: "Friday Lecture",
-    //         occurances: ""
-    //     },
-    //     {
-    //         name: "Quiz",
-    //         occurances: ""
-    //     },
-    //     {
-    //         name: "Lab",
-    //         occurances: ""
-    //     },
-    // ]
-
-    // const subjects = {
-    //     "COMP6080": {
-    //         tasks: dummyTaskList
-    //     },
-    //     "MTRN3500": {
-    //         tasks: dummyTaskList
-    //     },
-    //     "COMP2511": {
-    //         tasks: dummyTaskList
-    //     },
-    // }
-
-    // const data = {
-    //     subjects,
-    //     startdate: '13/2/2024'
-    // }
-
-    // localStorage.setItem("data", JSON.stringify(data))
-
     return (
         <>
             <TaskGrid />
@@ -93,3 +57,48 @@ function GridView() {
 }
 
 export default GridView;
+
+// const dummyTaskList = [
+//     {
+//         name: "Monday Lecture",
+//         occurances: {
+//             1: {
+//                 "status": 1,
+//             },
+//             2: {
+//                 "status": 2,
+//             }
+//         }
+//     },
+//     {
+//         name: "Friday Lecture",
+//         occurances: ""
+//     },
+//     {
+//         name: "Quiz",
+//         occurances: ""
+//     },
+//     {
+//         name: "Lab",
+//         occurances: ""
+//     },
+// ]
+
+// const subjects = {
+//     "COMP6080": {
+//         tasks: dummyTaskList
+//     },
+//     "MTRN3500": {
+//         tasks: dummyTaskList
+//     },
+//     "COMP2511": {
+//         tasks: dummyTaskList
+//     },
+// }
+
+// const data = {
+//     subjects,
+//     startdate: '13/2/2024'
+// }
+
+// localStorage.setItem("data", JSON.stringify(data))

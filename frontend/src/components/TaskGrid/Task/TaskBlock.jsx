@@ -16,9 +16,11 @@ function TaskBlock(props) {
 
     const initialStatus = getTaskStatus(props.task, props.week);
 
+    
     return (
         <>
             <TaskBlockBase
+                tooltip={props.tooltip}
                 initialStatus={initialStatus}
                 onStateChange={onStateChange}
                 width={1}

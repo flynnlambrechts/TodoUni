@@ -11,6 +11,7 @@ const TaskColumn = (subjectName, task, key) => {
     for (let weekIndex = 0; weekIndex < NUMWEEKS; weekIndex++) {
         result.push(
             <TaskBlock
+                tooltip={`${task.name} Week ${weekIndex + 1}`}
                 key={task.name + task.week + " " + weekIndex}
                 subjectName={subjectName}
                 task={task}

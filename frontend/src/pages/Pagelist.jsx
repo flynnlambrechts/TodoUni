@@ -12,6 +12,7 @@ import ListView from './ListView';
 import { base_url } from '../config';
 
 import ThemeModeController from '../wrappers/Theme';
+import GradeCalculator from './GradeCalculator';
 
 function PageList() {
     return (
@@ -24,6 +25,7 @@ function PageList() {
                         <Route path={base_url} element={<Dashboard />} />
                         <Route path={base_url + 'grid'} element={<GridView />} />
                         <Route path={base_url + '/list'} element={<ListView />} />
+                        <Route path={base_url + '/grade-calculator'} element={<GradeCalculator />} />
                     </Routes>
                 </Main>
                 <Footer />

@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { PaintContext } from "./GridContainer";
 
 function SubjectHeader(props) {
     const styles = {

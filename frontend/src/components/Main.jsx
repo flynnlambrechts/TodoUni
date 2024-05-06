@@ -1,18 +1,12 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 function Main(props) {
-    const style = {
-        display: "flex",
-        flexGrow: 1,
-        flexDirection: "column",
-    };
-    return (
-        <main style={style}>
-            <Container
-                maxWidth="unset"
+    return (<>
+            <Box
+                component="main"
                 sx={{
-                    // border: 1,
+                    // border: "1px solid red",
                     flexGrow: 1,
                     display: "flex",
                     flexDirection: "column",
@@ -20,9 +14,8 @@ function Main(props) {
                     boxSizing: "border-box"
                 }}>
                 {props.children}
-            </Container>
-        </main>
-    );
+            </Box>
+    </>);
 }
 
 export default Main;
