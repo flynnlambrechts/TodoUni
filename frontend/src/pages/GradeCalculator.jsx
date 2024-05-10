@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { Container, Button, Box } from "@mui/material";
 import SubjectGrades from "../components/GradeCalculator/SubjectGrades";
+import { getSubjects } from "../helpers";
 
 function GradeCalculator(props) {
-    const [lists, setLists] = useState([]);
+    const subjects = getSubjects();
+    const initiaLists = [];
+    for (const subject of Object.keys(subjects)) {
+        initiaLists.push({
+            subjectName: subject,
+            gradeItems: [],
+        });
+    }
 
+    const [lists, setLists] = useState(initiaLists);
     const handleAddGradeItem = (index) => {
         const newLists = [...lists];
         newLists[index].gradeItems.push({});
@@ -15,10 +24,6 @@ function GradeCalculator(props) {
         const newLists = [...lists];
         newLists[listIndex].gradeItems.splice(itemIndex, 1);
         setLists(newLists);
-    };
-
-    const handleAddList = () => {
-        setLists([...lists, { subjectName: "COMP3821", gradeItems: [{}] }]);
     };
 
     return (
@@ -37,9 +42,6 @@ function GradeCalculator(props) {
                     />
                 </Box>
             ))}
-            <Button onClick={handleAddList} variant="contained" color="primary">
-                Add Subject
-            </Button>
         </Container>
     );
 }

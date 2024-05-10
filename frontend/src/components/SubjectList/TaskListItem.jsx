@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItem, ListItemText, Tooltip } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { DeleteOutline } from "@mui/icons-material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { deleteTask } from "../../helpers";
 
@@ -14,11 +14,9 @@ function TaskListItem(props) {
             sx={{ display: "flex", justifyContent: "space-between" }}
             secondaryAction={
                 <Tooltip title={"Delete Task"} placement="right">
-                    <IconButton>
-                        <DeleteIcon
-                            onClick={() =>
-                                deleteTask(props.subjectId, data.name)
-                            }></DeleteIcon>
+                    <IconButton
+                        onClick={() => deleteTask(props.subjectId, data.name)}>
+                        <DeleteOutline></DeleteOutline>
                     </IconButton>
                 </Tooltip>
             }>

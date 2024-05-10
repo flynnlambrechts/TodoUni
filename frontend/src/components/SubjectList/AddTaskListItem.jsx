@@ -50,15 +50,26 @@ function AddTaskListItem(props) {
                         onChange={handleInputChange}
                     />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={recurring ? 3 : 1}>
                     <ToggleButton
+                        fullWidth
                         selected={recurring}
                         onChange={() => setRecurring(!recurring)}
-                        size="large"
-                        fullWidth>
+                        size="large">
                         Recur
                     </ToggleButton>
                 </Grid>
+                {!recurring && (
+                    <Grid item xs={2}>
+                        <NumberField
+                            name="week"
+                            label="Week"
+                            min={0}
+                            max={13}
+                            onChange={handleInputChange}
+                        />
+                    </Grid>
+                )}
                 <Grid item xs={6} sm={3}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <NumberField
@@ -97,18 +108,6 @@ function AddTaskListItem(props) {
                         onDayChange={setSelectedDays}
                     />
                 </Grid>
-                {!recurring && (
-                    <Grid item xs={2}>
-                        <NumberField
-                            fullWidth
-                            name="week"
-                            label="Week"
-                            min={0}
-                            max={13}
-                            onChange={handleInputChange}
-                        />
-                    </Grid>
-                )}
                 <Grid item xs={2}>
                     <Button
                         fullWidth

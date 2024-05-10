@@ -58,7 +58,7 @@ function SubjectControls(props) {
                     </Tooltip>
                 </Box>
                 <Tooltip title="Add Task">
-                    <IconButton onClick={props.openAddTask}>
+                    <IconButton color="primary" onClick={props.openAddTask}>
                         <Add />
                     </IconButton>
                 </Tooltip>

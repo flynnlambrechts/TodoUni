@@ -148,17 +148,25 @@ export const getDatesOfTask = (task, occurance) => {
 
 // Progress Bar
 export const getFractionOfCompletedTasksToDate = (date) => {
+    const counters = {};
+
     let completed = 0;
     let total = 0;
+
 
     const subjects = getSubjects();
     for (const subjectName of Object.keys(subjects)) {
         const tasks = getTasks(subjectName);
         for (const task of tasks) {
-            for (let week = 0; week <= getWeekOfTerm(date); week++) {
+            for (let week = 0; week < Math.min(NUMWEEKS, getWeekOfTerm(date)); week++) {
                 if (getDatesOfTask(task, week) < date) {
                     // TODO: extract this into its own func
-                    const status = getTaskStatus(task, week);
+                    const status = task.occurances[week];
+                    if (status in counters) {
+                        counters[status] += 1;
+                    } else {
+                        counters[status] = 1;
+                    }
                     total++;
                     if (status) {
                         if (status === 'na' || status === "locked") total--;
@@ -169,6 +177,7 @@ export const getFractionOfCompletedTasksToDate = (date) => {
         }
 
     }
+    console.log(counters);
     return total ? completed / total : 0;
 }
 
