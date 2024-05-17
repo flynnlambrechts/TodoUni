@@ -21,10 +21,10 @@ function TaskListItem(props) {
                 </Tooltip>
             }>
             <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-                <Grid xs={5}>
+                <Grid xs={6} sm={5}>
                     <ListItemText>{data.name}</ListItemText>
                 </Grid>
-                <Grid xs={2}>
+                <Grid xs={5} sm={2}>
                     {/* <Divider orientation="vertical" flexItem /> */}
                     <ListItemText>
                         {data.hour}:
@@ -32,12 +32,14 @@ function TaskListItem(props) {
                         {data.ampm}
                     </ListItemText>
                 </Grid>
-                <Grid xs={2}>
+                <Grid xs={6} sm={2}>
                     <ListItemText>
                         {data.recurring ? "Recurs" : "Week " + data.week}
                     </ListItemText>
                 </Grid>
-                <Grid xs={2}>{data.selectedDays.map((day) => day)}</Grid>
+                <Grid xs={6} sm={2}>
+                    {data.selectedDays.map((day) => day)}
+                </Grid>
             </Grid>
         </ListItem>
     );

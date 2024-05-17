@@ -27,7 +27,7 @@ function SubjectListItem(props) {
         <Card variant="outlined">
             <CardHeader
                 onClick={toggleOpen}
-                title={<Typography variant="h6">{props.title}</Typography>}
+                title={<Typography variant="h5">{props.title}</Typography>}
                 action={open ? <ExpandLess /> : <ExpandMore />}
             />
 

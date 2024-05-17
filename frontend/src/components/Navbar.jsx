@@ -17,7 +17,7 @@ import NightModeToggle from "./NightModeToggle";
 import { base_url } from "../config";
 
 const pages = {
-    "Grid": "grid",
+    Grid: "grid",
     "Grade Calculator": "grade-calculator",
 };
 const settings = ["Logout", "Login", "Register"];
@@ -142,7 +142,7 @@ function Navbar() {
 
                     <NightModeToggle />
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ display: "none", flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
                                 edge="end"

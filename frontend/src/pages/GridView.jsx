@@ -37,7 +37,7 @@ function TaskGrid() {
         <Box
             sx={{
                 flexGrow: 1,
-                // border: 1,
+                padding: 1,
                 display: "flex",
                 flexDirection: "column",
             }}>

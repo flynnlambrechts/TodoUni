@@ -1,12 +1,17 @@
 import { NUMWEEKS, statuses } from "./config";
-import { getISOWeek, parseDate, dayOfWeekToIndex } from "./utils";
+import { getISOWeek, parseDate, dayOfWeekToIndex, roundToDecimals } from "./utils";
 
 const blankData = {
     subjects: {}
 }
 
+
 const getData = () => {
     return JSON.parse(localStorage.getItem("data"));
+}
+
+const saveData = (data) => {
+    localStorage.setItem("data", JSON.stringify(data));
 }
 
 export const getStartDateString = () => {
@@ -24,7 +29,7 @@ export const getStartDate = () => {
 export const saveStartDate = (newDate) => {
     const data = getData() || blankData;
     data.startdate = newDate;
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const addSubject = (name) => {
@@ -33,13 +38,13 @@ export const addSubject = (name) => {
         data.subjects = {};
     }
     data.subjects[name] = { tasks: [] };
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const removeSubject = (name) => {
     const data = getData();
     delete data.subjects[name];
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const renameSubject = (name, newName) => {
@@ -47,7 +52,7 @@ export const renameSubject = (name, newName) => {
     data.subjects[newName] = data.subjects[name];
     console.log(data);
     delete data.subjects[name];
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const getSubjects = () => {
@@ -63,7 +68,7 @@ export const addTask = (subject, task) => {
     if (data && data.subjects && data.subjects[subject]) {
         data.subjects[subject].tasks.push(task);
     }
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const getTasks = (subject) => {
@@ -73,9 +78,13 @@ export const getTasks = (subject) => {
 export const deleteTask = (subjectName, taskName) => {
     const data = getData();
     data.subjects[subjectName].tasks = getTasks(subjectName).filter((task) => task.name !== taskName);
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
-
+export const setGrades = (subjectName, grades) => {
+    const data = getData();
+    data.subjects[subjectName].grades = grades;
+    saveData(data);
+}
 
 export const updateState = (subjectName, taskName, week, state) => {
     const data = getData();
@@ -88,14 +97,14 @@ export const updateState = (subjectName, taskName, week, state) => {
         targetTask.occurances[week] = state
     }
     console.log(data);
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const updateExam = (subjectName, state) => {
     const data = getData();
     const subject = data.subjects[subjectName];
     subject["exam"] = state;
-    localStorage.setItem("data", JSON.stringify(data));
+    saveData(data);
 }
 
 export const getExam = (subjectName) => {
@@ -146,38 +155,74 @@ export const getDatesOfTask = (task, occurance) => {
     return resultDate;
 }
 
-// Progress Bar
-export const getFractionOfCompletedTasksToDate = (date) => {
-    const counters = {};
-
-    let completed = 0;
-    let total = 0;
-
-
+export const getTaskProgressBreakDown = (date) => {
+    const counters = { total: 0, before: {}, after: {} };
     const subjects = getSubjects();
     for (const subjectName of Object.keys(subjects)) {
         const tasks = getTasks(subjectName);
         for (const task of tasks) {
-            for (let week = 0; week < Math.min(NUMWEEKS, getWeekOfTerm(date)); week++) {
+            for (let week = 0; week < NUMWEEKS; week++) {
+                const status = task.occurances[week];
                 if (getDatesOfTask(task, week) < date) {
-                    // TODO: extract this into its own func
-                    const status = task.occurances[week];
-                    if (status in counters) {
-                        counters[status] += 1;
+                    if (status in counters.before) {
+                        counters.before[status] += 1;
                     } else {
-                        counters[status] = 1;
+                        counters.before[status] = 1;
                     }
-                    total++;
-                    if (status) {
-                        if (status === 'na' || status === "locked") total--;
-                        if (status === "done") completed++;
+                } else {
+                    if (status in counters.after) {
+                        counters.after[status] += 1;
+                    } else {
+                        counters.after[status] = 1;
                     }
                 }
             }
-        }
 
+        }
     }
-    console.log(counters);
-    return total ? completed / total : 0;
+    return counters;
+}
+// Progress Bar
+export const getFractionOfCompletedTasksToDate = (date) => {
+    const breakdown = getTaskProgressBreakDown(date);
+
+    // const counters = {};
+
+    // let completed = 0;
+    // let total = 0;
+
+
+    // const subjects = getSubjects();
+    // for (const subjectName of Object.keys(subjects)) {
+    //     const tasks = getTasks(subjectName);
+    //     for (const task of tasks) {
+    //         for (let week = 0; week < Math.min(NUMWEEKS, getWeekOfTerm(date)); week++) {
+    //             if (getDatesOfTask(task, week) < date) {
+    //                 // TODO: extract this into its own func
+    //                 const status = task.occurances[week];
+    //                 if (status in counters) {
+    //                     counters[status] += 1;
+    //                 } else {
+    //                     counters[status] = 1;
+    //                 }
+    //                 total++;
+    //                 if (status) {
+    //                     if (status === 'na' || status === "locked") total--;
+    //                     if (status === "done") completed++;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    // }
+    return 100 / 100;
+    // console.log(counters);
+    // return total ? completed / total : 0;
 }
 
+export const calculateIndividualMark = (grades) => {
+    let mark = parseFloat(grades.mark);
+    grades.bonus && (mark *= 1 + parseFloat(grades.bonus) / 100);
+    grades.penalty && (mark *= 1 - parseFloat(grades.penalty) / 100);
+    return roundToDecimals(mark / parseFloat(grades.maximum), 2);
+};

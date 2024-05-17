@@ -38,3 +38,8 @@ export const dayOfWeekToIndex = (dayOfWeek) => {
 export function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function roundToDecimals(number, decimals) {
+    const factor = Math.pow(10, decimals);
+    return Math.round(number * factor) / factor;
+}

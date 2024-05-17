@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Box, Checkbox, ListItem, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import DayOfWeekPicker from "../DayOfTheWeekPicker";
-import NumberField from "../NumberField";
-import AmPmSelector from "../AmPmSelector";
+import DayOfWeekPicker from "../Fields/DayOfTheWeekPicker";
+import NumberField from "../Fields/NumberField";
+import AmPmSelector from "../Fields/AmPmSelector";
 import { addTask } from "../../helpers";
 import ToggleButton from "@mui/material/ToggleButton";
 

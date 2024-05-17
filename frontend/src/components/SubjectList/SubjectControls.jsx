@@ -14,7 +14,7 @@ import {
 import { DeleteOutline, Edit, Add } from "@mui/icons-material"; // Import icons
 import { removeSubject, renameSubject } from "../../helpers";
 
-import TextInputModal from "../TextInputModal";
+import TextInputModal from "../Fields/TextInputModal";
 
 function SubjectControls(props) {
     const [editOpen, setEditOpen] = useState(false);
