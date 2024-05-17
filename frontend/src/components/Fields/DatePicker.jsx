@@ -28,6 +28,7 @@ function DatePicker(props) {
                 fullWidth
                 variant="outlined"
                 type="submit"
+                sx={{ height: "100%" }}
                 onClick={onDateSet}>
                 {date ? "Update" : "Set"}
             </Button>
@@ -38,7 +39,7 @@ function DatePicker(props) {
         <Box>
             <form>
                 <Grid container sx={{ flexGrow: 1 }}>
-                    <Grid xs={12} sm={9}>
+                    <Grid xs={12} md={9}>
                         <TextField
                             label={props.label}
                             placeholder="dd/mm/yy"
@@ -47,7 +48,7 @@ function DatePicker(props) {
                             onChange={onDateChange}
                         />
                     </Grid>
-                    <Grid xs={12} sm={3}>
+                    <Grid xs={12} md={3}>
                         <SubmitButton />
                     </Grid>
                 </Grid>
