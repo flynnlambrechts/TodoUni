@@ -91,10 +91,10 @@ export const updateState = (subjectName, taskName, week, state) => {
     const subject = data.subjects[subjectName];
     const targetTask = subject.tasks.find(task => task.name === taskName);
     if (targetTask) {
-        if (!targetTask.occurances) {
-            targetTask.occurances = {};
+        if (!targetTask.occurrences) {
+            targetTask.occurrences = {};
         }
-        targetTask.occurances[week] = state
+        targetTask.occurrences[week] = state
     }
     console.log(data);
     saveData(data);
@@ -112,23 +112,23 @@ export const getExam = (subjectName) => {
     return subject.exam;
 }
 
-export const getTaskStatus = (task, occurance) => {
+export const getTaskStatus = (task, occurrence) => {
     // console.log(task)
-    if (!task || !task.occurances) return "none";
+    if (!task || !task.occurrences) return "none";
     if (task.recurring) {
-        if (!task.occurances[occurance] || task.occurances[occurance] === "none") {
-            if (new Date().getTime() > getDatesOfTask(task, occurance - 1).getTime()) {
+        if (!task.occurrences[occurrence] || task.occurrences[occurrence] === "none") {
+            if (new Date().getTime() > getDatesOfTask(task, occurrence - 1).getTime()) {
                 return "behind";
             }
             return "none"
         }
-        return task.occurances[occurance]
-    } else if (occurance !== parseInt(task.week)) {
-        console.log(occurance, parseInt(task.week), task)
+        return task.occurrences[occurrence]
+    } else if (occurrence !== parseInt(task.week)) {
+        console.log(occurrence, parseInt(task.week), task)
         return "locked";
     } else {
         return "none";
-        // return Object.keys(statusStyles)[task.occurances[occurance]]
+        // return Object.keys(statusStyles)[task.occurrences[occurrence]]
     }
 }
 
@@ -139,14 +139,14 @@ export const getWeekOfTerm = (date) => {
     return week - startWeek;
 }
 
-export const getDatesOfTask = (task, occurance) => {
-    // {name, hour, minute, ampm, recurring, selectedDays: [], occurances: {}, week?, duration?}
+export const getDatesOfTask = (task, occurrence) => {
+    // {name, hour, minute, ampm, recurring, selectedDays: [], occurrences: {}, week?, duration?}
     // TODO: This only works for the first day selected of the task e.g. if its [Monday, Friday] is works o
     // off the monday value, some work needs to be done to fix this. Also It's an ugly function
     const startOfTerm = getStartDate();
 
     const year = new Date(startOfTerm.getFullYear(), 0, 1);
-    const week = getISOWeek(startOfTerm) + occurance;
+    const week = getISOWeek(startOfTerm) + occurrence;
     const timeOfDay = (parseInt(task.hour) % 12 + (task.ampm === 'PM' ? 12 : 0)) * 60 * 60 * 1000 + parseInt(task.minute) * 60 * 1000;
     // console.log(task.selectedDays[0], dayOfWeekToIndex(task.selectedDays[0]))
     const dayOffset = ((week - 1) * 7 + dayOfWeekToIndex(task.selectedDays[0]) - 1) * 24 * 60 * 60 * 1000;
@@ -162,7 +162,7 @@ export const getTaskProgressBreakDown = (date) => {
         const tasks = getTasks(subjectName);
         for (const task of tasks) {
             for (let week = 0; week < NUMWEEKS; week++) {
-                const status = task.occurances[week];
+                const status = task.occurrences[week];
                 if (getDatesOfTask(task, week) < date) {
                     if (status in counters.before) {
                         counters.before[status] += 1;
@@ -199,7 +199,7 @@ export const getFractionOfCompletedTasksToDate = (date) => {
     //         for (let week = 0; week < Math.min(NUMWEEKS, getWeekOfTerm(date)); week++) {
     //             if (getDatesOfTask(task, week) < date) {
     //                 // TODO: extract this into its own func
-    //                 const status = task.occurances[week];
+    //                 const status = task.occurrences[week];
     //                 if (status in counters) {
     //                     counters[status] += 1;
     //                 } else {

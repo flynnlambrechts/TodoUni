@@ -61,7 +61,7 @@ export default GridView;
 // const dummyTaskList = [
 //     {
 //         name: "Monday Lecture",
-//         occurances: {
+//         occurrences: {
 //             1: {
 //                 "status": 1,
 //             },
@@ -72,15 +72,15 @@ export default GridView;
 //     },
 //     {
 //         name: "Friday Lecture",
-//         occurances: ""
+//         occurrences: ""
 //     },
 //     {
 //         name: "Quiz",
-//         occurances: ""
+//         occurrences: ""
 //     },
 //     {
 //         name: "Lab",
-//         occurances: ""
+//         occurrences: ""
 //     },
 // ]
 
