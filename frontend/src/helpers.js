@@ -117,7 +117,7 @@ export const getTaskStatus = (task, occurrence) => {
     if (!task || !task.occurrences) return "none";
     if (task.recurring) {
         if (!task.occurrences[occurrence] || task.occurrences[occurrence] === "none") {
-            if (new Date().getTime() > getDatesOfTask(task, occurrence - 1).getTime()) {
+            if (new Date().getTime() > getDatesOfTask(task, occurrence + 1).getTime()) {
                 return "behind";
             }
             return "none"
@@ -147,6 +147,7 @@ export const getDatesOfTask = (task, occurrence) => {
 
     const year = new Date(startOfTerm.getFullYear(), 0, 1);
     const week = getISOWeek(startOfTerm) + occurrence;
+    console.log(week);
     const timeOfDay = (parseInt(task.hour) % 12 + (task.ampm === 'PM' ? 12 : 0)) * 60 * 60 * 1000 + parseInt(task.minute) * 60 * 1000;
     // console.log(task.selectedDays[0], dayOfWeekToIndex(task.selectedDays[0]))
     const dayOffset = ((week - 1) * 7 + dayOfWeekToIndex(task.selectedDays[0]) - 1) * 24 * 60 * 60 * 1000;
