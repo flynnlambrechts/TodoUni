@@ -8,6 +8,7 @@ import { deleteTask } from "../../helpers";
 function TaskListItem(props) {
     // props: {subjectId, data: {name, hour, minute, ampm, recurring, selectedDays: [], week?, duration?}}
     const data = props.data;
+    console.log(props.data);
     return (
         <ListItem
             component="div"
@@ -38,7 +39,7 @@ function TaskListItem(props) {
                     </ListItemText>
                 </Grid>
                 <Grid xs={6} sm={2}>
-                    {data.selectedDays.map((day) => day)}
+                    {data.selectedDays}
                 </Grid>
             </Grid>
         </ListItem>
