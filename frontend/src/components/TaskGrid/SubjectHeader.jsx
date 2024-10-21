@@ -19,7 +19,9 @@ function SubjectHeader(props) {
                     alignItems: "center",
                     justifyContent: "center",
                 }}>
-                <Typography variant="h5">{props.name}</Typography>
+                <Typography variant="h4" fontWeight="fontWeightMedium">
+                    {props.name}
+                </Typography>
             </Box>
         </Box>
     );

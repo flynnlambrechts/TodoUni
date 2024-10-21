@@ -63,7 +63,7 @@ function SubjectGrid(props) {
         <Box sx={containerStyles}>
             <SubjectHeader name={subjectName} numTasks={tasks.length} />
             {taskColumns}
-            <ExamBlock subjectName={subjectName} width={tasks.length}/>
+            <ExamBlock subjectName={subjectName} width={tasks.length} />
         </Box>
     );
 }

@@ -42,20 +42,27 @@ function TaskBlockBase(props) {
     const [textColor, setTextColor] = React.useState("transparent");
     const { paintState, setPaintState } = React.useContext(PaintContext);
 
+    const isInteractive = () => {
+        return props.initialStatus !== "locked";
+    };
     const handleMouseDown = () => {
         setPaintState(state);
     };
     const onClick = () => {
-        const newState = getNextState();
-        updateState(newState);
+        if (isInteractive()) {
+            const newState = getNextState();
+            updateState(newState);
+        }
     };
 
     const handleMouseEnter = () => {
-        if (paintState) {
-            updateState(paintState);
-        } else if (state !== "na") {
-            setElevation(10);
-            setTextColor();
+        if (isInteractive()) {
+            if (paintState) {
+                updateState(paintState);
+            } else if (state !== "na") {
+                setElevation(50);
+                setTextColor();
+            }
         }
     };
 
@@ -122,8 +129,10 @@ function TaskBlockBase(props) {
         </Paper>
     );
 
-    return props.tooltip ? (
-        <Tooltip title={props.tooltip} arrow disableInteractive>{block}</Tooltip>
+    return props.tooltip && isInteractive() ? (
+        <Tooltip title={props.tooltip} arrow disableInteractive>
+            {block}
+        </Tooltip>
     ) : (
         block
     );

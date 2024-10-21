@@ -13,12 +13,10 @@ function GridContainer(props) {
     }
 
     const containerStyles = {
-        // border: 1,
         display: "grid",
         columnGap: 2,
         gridTemplateColumns,
         gridTemplateRows: "1fr",
-        flexGrow: 1,
     };
     return (
         <>
@@ -31,7 +29,6 @@ function GridContainer(props) {
                     onMouseLeave={() => {
                         setPaintState(undefined);
                     }}>
-
                     <RowHeaders />
                     {props.children}
                 </Box>

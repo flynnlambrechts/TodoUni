@@ -29,6 +29,7 @@ function SubjectControls(props) {
 
     const handleDeleteConfirm = () => {
         removeSubject(subjectToDelete);
+        props.onDelete();
         setDeleteConfirmOpen(false);
     };
 

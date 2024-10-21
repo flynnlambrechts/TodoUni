@@ -13,6 +13,7 @@ import GradeItem from "./GradeItem";
 import AddIcon from "@mui/icons-material/Add";
 import PercentIcon from "@mui/icons-material/Percent";
 import { calculateIndividualMark } from "../../helpers";
+import { roundToDecimals } from "../../utils";
 
 function SubjectGrades({
     subjectName,
@@ -28,8 +29,9 @@ function SubjectGrades({
                 if (item.mark && item.maximum) {
                     return (
                         total +
-                        calculateIndividualMark(item) *
-                            parseFloat(item.weighting)
+                        (calculateIndividualMark(item) *
+                            parseFloat(item.weighting)) /
+                            100
                     );
                 }
                 return total;
@@ -47,7 +49,8 @@ function SubjectGrades({
                     item.maximum
                 ) {
                     const weighting = parseFloat(item.weighting);
-                    sumproduct += calculateIndividualMark(item) * weighting;
+                    sumproduct +=
+                        (calculateIndividualMark(item) / 100) * weighting;
                     totalWeight += weighting;
                 }
             });
@@ -56,8 +59,8 @@ function SubjectGrades({
                 : Math.round((sumproduct / totalWeight) * 10000) / 100;
         };
         setTotals({
-            Subtotal: calculateSubtotal(),
-            Total: calculateTotalMark(),
+            Subtotal: roundToDecimals(calculateSubtotal(), 2),
+            Total: roundToDecimals(calculateTotalMark(), 2),
         });
     }, [gradeItems]);
 
@@ -99,8 +102,11 @@ function SubjectGrades({
                     justifyContent="flex-end"
                     gap={3}
                     marginTop={2}>
-                    <Total name="Subtotal" value={totals.Subtotal} />
-                    <Total name="Total" value={totals.Total} />
+                    <Total name="Weighted Mark" value={totals.Subtotal} />
+                    <Total
+                        name="Accumulate Weighted Mark"
+                        value={totals.Total}
+                    />
                 </Box>
             </CardContent>
             <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>

@@ -2,13 +2,12 @@ import React from "react";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Tooltip, Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { DeleteOutline } from "@mui/icons-material";
 import PercentIcon from "@mui/icons-material/Percent";
-import { capitalizeFirstLetter, roundToDecimals } from "../../utils";
+import { capitalizeFirstLetter } from "../../utils";
 import PercentageField from "../Fields/PercentageField";
-import NumberField from "../Fields/NumberField";
-import { calculateIndividualMark } from "../../helpers";
+import { calculateIndividualMark, formatGrade } from "../../helpers";
 
 const InputField = ({ name, onChange, data, color, percentage }) => {
     const props = {
@@ -115,12 +114,7 @@ function GradeItem({ initial_val, onChange, onRemove }) {
                         <Box></Box>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                             <Typography variant="h6">
-                                {roundToDecimals(
-                                    (calculateIndividualMark(data) /
-                                        parseFloat(data.maximum)) *
-                                        100,
-                                    2
-                                )}
+                                {formatGrade(calculateIndividualMark(data))}
                             </Typography>
                             <PercentIcon />
                         </Box>

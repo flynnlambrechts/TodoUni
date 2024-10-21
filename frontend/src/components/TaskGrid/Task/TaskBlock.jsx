@@ -16,7 +16,6 @@ function TaskBlock(props) {
 
     const initialStatus = getTaskStatus(props.task, props.week);
 
-    
     return (
         <>
             <TaskBlockBase

@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addSubject, getSubjects } from "../../helpers";
 import List from "@mui/material/List";
 import SubjectListItem from "./SubjectListItem";
 import NewListItem from "./NewListItem";
-import { Box } from "@mui/material";
 
 const SubjectList = () => {
-    return (
-        <>
-            <List sx={{display: "flex", flexDirection: "column", gap: 2}}>
+    const [subjects, setSubjects] = useState([]);
 
-                {Object.keys(getSubjects()).map((subjectName) => 
-                    <SubjectListItem title={subjectName} />
-                )}
-                <NewListItem onSubmit={(newSubj) => addSubject(newSubj)}></NewListItem>
-            </List>
-        </>
+    useEffect(() => {
+        setSubjects(getSubjects());
+    }, []);
+
+    const handleAddSubject = (newSubj) => {
+        addSubject(newSubj);
+        setSubjects(getSubjects());
+    };
+
+    return (
+        <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {Object.keys(subjects).map((subjectName) => (
+                <SubjectListItem
+                    key={subjectName}
+                    title={subjectName}
+                    onDelete={() => setSubjects(getSubjects())}
+                />
+            ))}
+            <NewListItem onSubmit={handleAddSubject} />
+        </List>
     );
 };
 

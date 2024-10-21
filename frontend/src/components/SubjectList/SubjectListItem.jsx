@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-    List,
-    ListItemText,
-    ListItemButton,
-    Typography,
-    Card,
-    CardHeader,
-    CardContent,
-} from "@mui/material";
+import { List, Typography, Card, CardHeader, CardContent } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import TaskListItem from "./TaskListItem";
@@ -54,6 +46,7 @@ function SubjectListItem(props) {
                 </CardContent>
                 <SubjectControls
                     name={props.title}
+                    onDelete={props.onDelete}
                     openAddTask={() => setAddTask(true)}
                 />
             </Collapse>

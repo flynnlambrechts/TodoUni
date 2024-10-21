@@ -98,7 +98,6 @@ function AddTaskListItem(props) {
                         label="Duration (mins)"
                         name="duration"
                         min={0}
-                        max={120}
                         onChange={handleInputChange}
                     />
                 </Grid>

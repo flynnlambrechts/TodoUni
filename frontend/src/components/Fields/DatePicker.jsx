@@ -16,7 +16,6 @@ function DatePicker(props) {
 
     const onDateSet = (e) => {
         e.preventDefault();
-        console.log(date);
         if (props.onChange) {
             props.onChange(date);
         }

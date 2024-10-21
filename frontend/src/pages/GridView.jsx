@@ -43,7 +43,7 @@ function TaskGrid() {
             }}>
             <GridContainer widths={widths}>{grid}</GridContainer>
             <Button>Clear</Button>
-            <ProgressBar />
+            {/* <ProgressBar /> */}
         </Box>
     );
 }
